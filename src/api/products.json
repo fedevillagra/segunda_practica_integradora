@@ -1,0 +1,142 @@
+[
+	{
+		"id": 1,
+		"title": "iPhone 13 Pro",
+		"description": "El último teléfono inteligente de Apple con características avanzadas",
+		"price": 1099.99,
+		"thumbnails": [
+			"iPhone-13-Pro.png",
+			"ruta-imagen-2.jpg"
+		],
+		"code": "54321",
+		"category": "Electrónica",
+		"stock": 10,
+		"status": true
+	},
+	{
+		"id": 2,
+		"title": "Samsung QLED TV",
+		"description": "Televisor QLED de 65 pulgadas con calidad de imagen excepcional",
+		"price": 1499.99,
+		"thumbnails": [
+			"Samsung-QLED-TV.png",
+			"ruta-imagen-4.jpg"
+		],
+		"code": "67890",
+		"category": "Electrónica",
+		"stock": 5,
+		"status": true
+	},
+	{
+		"id": 3,
+		"title": "Sony WH-1000XM4",
+		"description": "Auriculares inalámbricos con cancelación de ruido líder en la industria",
+		"price": 349.99,
+		"thumbnails": [
+			"Sony-WH-1000XM4.png",
+			"ruta-imagen-6.jpg"
+		],
+		"code": "13579",
+		"category": "Electrónica",
+		"stock": 20,
+		"status": true
+	},
+	{
+		"id": 4,
+		"title": "DJI Mavic Air 2",
+		"description": "Drone plegable con cámara 4K para capturar imágenes aéreas impresionantes",
+		"price": 799.99,
+		"thumbnails": [
+			"DJI-Mavic-Air-2.png",
+			"ruta-imagen-8.jpg"
+		],
+		"code": "24680",
+		"category": "Electrónica",
+		"stock": 15,
+		"status": true
+	},
+	{
+		"id": 5,
+		"title": "Nintendo Switch",
+		"description": "Consola de videojuegos híbrida para jugar en casa y en movimiento",
+		"price": 299.99,
+		"thumbnails": [
+			"Nintendo-Switch.png",
+			"ruta-imagen-10.jpg"
+		],
+		"code": "97531",
+		"category": "Electrónica",
+		"stock": 8,
+		"status": true
+	},
+	{
+		"id": 6,
+		"title": "Canon EOS R6",
+		"description": "Cámara sin espejo de fotograma completo para fotografía y video de alta calidad",
+		"price": 2499.99,
+		"thumbnails": [
+			"Canon-EOS-R6.png",
+			"ruta-imagen-12.jpg"
+		],
+		"code": "86420",
+		"category": "Electrónica",
+		"stock": 3,
+		"status": true
+	},
+	{
+		"id": 7,
+		"title": "Fitbit Versa 3",
+		"description": "Smartwatch con seguimiento de actividad, sueño y GPS integrado",
+		"price": 229.99,
+		"thumbnails": [
+			"Fitbit-Versa-3.png",
+			"ruta-imagen-14.jpg"
+		],
+		"code": "75310",
+		"category": "Electrónica",
+		"stock": 12,
+		"status": true
+	},
+	{
+		"id": 8,
+		"title": "Bose QuietComfort 35 II",
+		"description": "Auriculares inalámbricos con cancelación de ruido para una experiencia auditiva inmersiva",
+		"price": 329.99,
+		"thumbnails": [
+			"Bose-QuietComfort-35-II.png",
+			"ruta-imagen-16.jpg"
+		],
+		"code": "01234",
+		"category": "Electrónica",
+		"stock": 7,
+		"status": true
+	},
+	{
+		"id": 9,
+		"title": "LG OLED TV",
+		"description": "Televisor OLED de 55 pulgadas con colores vivos y negros profundos",
+		"price": 1999.99,
+		"thumbnails": [
+			"LG-OLED-TV.png",
+			"ruta-imagen-18.jpg"
+		],
+		"code": "98765",
+		"category": "Electrónica",
+		"stock": 4,
+		"status": true
+	},
+	{
+		"id": 10,
+		"title": "MacBook Pro",
+		"description": "Potente computadora portátil para profesionales creativos",
+		"price": 2399.99,
+		"thumbnails": [
+			"MacBook-Pro.png",
+			"ruta-imagen-20.jpg"
+		],
+		"code": "56789",
+		"category": "Electrónica",
+		"stock": 6,
+		"status": true
+	}
+]

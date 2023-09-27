@@ -2,8 +2,7 @@ import express from "express";
 import handlebars from "express-handlebars";
 import mongoose from "mongoose";
 import { Server } from "socket.io";
-import session from "express-session";
-import MongoStore from "connect-mongo";
+import cookieParser from "cookie-parser";
 import { PORT, __dirname, MONGO_DB_NAME, MONGO_URI, SECRET_PASS } from "./utils.js";
 import run from "./run.js";
 import passport from "passport";
@@ -19,21 +18,9 @@ app.engine("handlebars", handlebars.engine());
 app.set("views", `${__dirname}/views`);
 app.set("view engine", "handlebars");
 
-app.use(
-  session({
-    store: MongoStore.create({
-      mongoUrl: MONGO_URI,
-      dbName: MONGO_DB_NAME,
-      mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true },
-    }),
-    secret: SECRET_PASS,
-    resave: true,
-    saveUninitialized: true,
-  })
-);
+app.use(cookieParser(SECRET_PASS))
 initializePassport();
 app.use(passport.initialize());
-app.use(passport.session());
 
 try {
   await mongoose.connect(`${MONGO_URI}${MONGO_DB_NAME}`);

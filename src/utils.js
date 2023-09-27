@@ -3,6 +3,8 @@ import { dirname } from "path";
 import multer from "multer";
 import { config } from "dotenv";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import passport from "passport";
 
 config();
 
@@ -10,9 +12,11 @@ const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename);
 export const MONGO_URI = process.env.MONGO_URI;
 export const MONGO_DB_NAME = process.env.MONGO_DB_NAME;
-export const CLIENT_ID = process.env.CLIENT_ID;
-export const CLIENT_SECRET = process.env.CLIENT_SECRET;
+export const JWT_CLIENT_ID = process.env.JWT_CLIENT_ID;
+export const JWT_CLIENT_SECRET = process.env.JWT_CLIENT_SECRET;
 export const SECRET_PASS = process.env.SECRET_PASS;
+export const PRIVATE_KEY = process.env.PRIVATE_KEY;
+export const SIGNED_COOKIE_KEY = process.env.SIGNED_COOKIE_KEY;
 
 export const PORT = 8080;
 
@@ -32,11 +36,43 @@ export const createHash = (password) =>
 export const isValidPassword = (user, password) =>
   bcrypt.compareSync(password, user.password);
 
-// Midelware para comprobar si hay un usuario activo. sino redirigir a login
-export const requireAuth = (req, res, next) => {
-  if (!req.session?.passport?.user) {
-    res.redirect("/sessions/login");
-  } else {
-    next();
-  }
+/* JWT */
+export const generateToken = (user) => {
+  const token = jwt.sign({ user }, PRIVATE_KEY, { expiresIn: "24h" });
+  return token;
 };
+
+export const passportCall = (strategy) => {
+  return async (req, res, next) => {
+    passport.authenticate(strategy, { session: false }, function (err, user, info) {
+      if (err) return next(err);
+      if (!user) {
+        // Si no hay usuario autenticado, redireccionar a la vista de login
+        return res.redirect("/jwt/login");
+      }
+      req.user = user;
+      next();
+    })(req, res, next);
+  };
+};
+
+export const passportCallCurrent = (strategy) => {
+  return async (req, res, next) => {
+    passport.authenticate(strategy, { session: false }, function (err, user, info) {
+      if (err) return next(err);
+      if (!user) {
+        // Si no hay usuario, manejar el caso en el que no se proporcionó un token o no hay una cookie válida
+        if (info && info.message === "No token provided") {
+          return res.status(401).json({ status: "error", error: "No token provided" });
+        } else if (info && info.message === "There is no user with an active session") {
+          return res.status(401).json({ status: "error", error: "There is no user with an active session" });
+        } else {
+          return res.status(401).json({ status: "error", error: "Unauthorized" });
+        }
+      }
+      req.user = user;
+      next();
+    })(req, res, next);
+  };
+};
+

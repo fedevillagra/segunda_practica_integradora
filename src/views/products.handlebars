@@ -1,9 +1,9 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand btn btn-warning rounded-pill fw-bold"
-      href="/products/carts/64b21a4bd015ca7e88ea7fee">Cart</a>
+      href="/products/carts/{{user.cart}}" id="cart">Cart</a>
 
-    {{#if sessionAdmin}}
+    {{#if userAdmin}}
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -15,18 +15,18 @@
       </ul>
     {{/if}}
 
-    {{#if sessionUser}}
-    <a href="/sessions/logout" class="btn btn-secondary rounded-pill fw-bold ms-auto me-0">Logout</a>
+    {{#if user}}
+    <a href="/jwt/logout" class="btn btn-secondary rounded-pill fw-bold ms-auto me-0">Logout</a>
     {{else}}
-    <a href="/sessions/login" class="btn btn-secondary rounded-pill fw-bold ms-auto me-0">Login</a>
+    <a href="/jwt/login" class="btn btn-secondary rounded-pill fw-bold ms-auto me-0">Login</a>
     {{/if}}
   </div>
   </div>
 </nav>
 
-{{#if sessionUser}}
+{{#if user}}
   <div class="p-3 m-1 border border-dark rounded-3 d-inline-block shadow">
-    <h1>Welcome {{sessionUser.role}}: {{sessionUser.first_name}} {{sessionUser.last_name}} !</h1>
+    <h1>Welcome {{user.role}}: {{user.first_name}} {{user.last_name}} !</h1>
   </div>
   {{/if}}
 

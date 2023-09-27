@@ -2,12 +2,10 @@ import { Router } from "express";
 import { productModel } from "../dao/models/products.model.js";
 import messageModel from "../dao/models/messages.model.js";
 import { cartModel } from "../dao/models/carts.model.js";
-import { userModel } from "../dao/models/users.model.js";
-import {requireAuth} from "../utils.js"
 
 const router = Router();
 
-router.get("/", requireAuth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 10;
     const page = parseInt(req.query.page) || 1;
@@ -38,24 +36,26 @@ router.get("/", requireAuth, async (req, res) => {
       lean: true,
     };
 
-     const sessionUser = await userModel.findById(req.session?.passport?.user).lean().exec();
-
-    let sessionAdmin;
-    if (sessionUser) {
-     sessionAdmin = sessionUser?.role === "Admin" ? true : false; 
+    const user = req.user.user;
+    let userAdmin;
+    if (user) {
+      userAdmin = user?.role === "Admin" ? true : false;
     }
-    //console.log(sessionAdmin);
 
     const products = await productModel.paginate(filter, options);
-    res.render("products", { products, sessionUser, sessionAdmin });
+    res.render("products", { products, user, userAdmin });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error });
   }
 });
 
-router.get("/realTimeProducts", requireAuth, async (req, res) => {
+router.get("/realTimeProducts", async (req, res) => {
   try {
+    const userRole = req.user?.user?.role;
+    if (userRole !== "Admin") {
+      return res.redirect("/products");
+    }
     const allProducts = await productModel.find().lean().exec();
     res.render("realTimeProducts", { allProducts: allProducts });
   } catch (error) {
@@ -78,7 +78,12 @@ router.get("/product/:pid", async (req, res) => {
   try {
     const pid = req.params.pid;
     const product = await productModel.findById(pid).lean().exec();
-    res.render("product", { product });
+    const user = req.user.user;
+    let userAdmin;
+    if (user) {
+      userAdmin = user?.role === "Admin" ? true : false;
+    }
+    res.render("product", { product, user, userAdmin });
     if (product === null) {
       return res.status(404).json({ error: `The product does not exist` });
     }

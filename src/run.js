@@ -2,7 +2,8 @@ import messageModel from "./dao/models/messages.model.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import viewsProductsRouter from "./routes/views.router.js";
-import sessionRouter from "./routes/session.router.js";
+import jwtrouter from "./routes/jwt.router.js";
+import { passportCall } from "./utils.js";
 
 const run = (io, app) => {
   app.use((req, res, next) => {
@@ -10,12 +11,12 @@ const run = (io, app) => {
     next();
   });
 
-  // Rutas para la API de productos, carritos y sessions
+  // Rutas para la API de productos, carritos , sessions y jwt
   app.use("/api/products", productsRouter);
   app.use("/api/carts", cartsRouter);
-  app.use("/sessions", sessionRouter);
+  app.use("/jwt", jwtrouter);
   // Ruta para las vistas de productos
-  app.use("/products", viewsProductsRouter);
+  app.use("/products", passportCall("jwt"), viewsProductsRouter);
 
   // Evento de conexión de Socket.IO
   io.on("connection", async (socket) => {
